@@ -1,15 +1,31 @@
 import React from "react";
-import { Layout } from "antd";
+import { Layout, Card } from "antd";
 const { Content } = Layout;
 
-interface Props {}
+interface Props {
+    title?:string;
+}
 
-export const ContentLayout: React.FC<Props> = (props) => {
+export const ContentLayout: React.FC<Props> = props => {
   return (
-    <Content className="pt-2" style={{ margin: "0 16px" , minHeight:"800px"}}>
-      <div className="content">
+    <Content className="mt-2" style={{ margin: "0 16px" }}>
+      <Card
+          size="default"
+          title={props.title}
+          bordered={true}
+          className="card-content"
+        >
           {props.children}
-      </div>
+        </Card>
+      <style jsx>
+        {`
+          .card-content {
+            padding: 24px;
+            background-color: #fff;
+            min-height: 600px;
+          }
+        `}
+      </style>
     </Content>
   );
 };

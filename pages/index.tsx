@@ -1,10 +1,6 @@
-import { Layout } from '../components/Layout/Layout';
+import { Layout } from "../components/Layout/Layout";
+import "./style.css";
 
-const Home = ({ }) => (
-    <Layout>
-        Hello world
-    </Layout>
-  );
-  
-  
-  export default Home;
+const Home = ({}) => <Layout>Hello world</Layout>;
+
+export default Home;

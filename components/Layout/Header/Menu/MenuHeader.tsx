@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Icon, Menu } from "antd";
 const { SubMenu } = Menu;
+import Router from "next/router";
 
 interface Props {}
 
@@ -11,38 +12,102 @@ export const MenuHeader: React.FC<Props> = () => {
     setCurrent(e);
   };
 
+  const onClickMenu = (link: string) => {
+    Router.push(link);
+  };
+
   return (
-    <Menu onClick={handleClick} theme="dark" selectedKeys={[current]} mode="horizontal" className="align-self-center">
-      <Menu.Item key="mail">
-        <Icon type="mail" />
-        Navigation One
-      </Menu.Item>
-      <Menu.Item key="app" disabled>
-        <Icon type="appstore" />
-        Navigation Two
-      </Menu.Item>
-      <SubMenu
-        title={
-          <span className="submenu-title-wrapper">
-            <Icon type="setting" />
-            Navigation Three - Submenu
-          </span>
+    <Menu
+      onClick={handleClick}
+      theme="dark"
+      selectedKeys={[current]}
+      mode="horizontal"
+      className="align-self-center"
+    >
+      {MENU_CONSTANT.map(menu => {
+        if (menu.childMenu.length > 0) {
+          return (
+            <SubMenu
+              key={menu.key}
+              title={
+                <span>
+                  <Icon type={menu.icon} />
+                  <span>{menu.displayName}</span>
+                </span>
+              }
+            >
+              {menu.childMenu.map(subItem => {
+                return (
+                  <Menu.Item
+                    key={subItem.key}
+                    onClick={() => onClickMenu(subItem.link)}
+                  >
+                    <Icon type={subItem.childIcon} />
+                    <span>{subItem.displayName}</span>
+                  </Menu.Item>
+                );
+              })}
+            </SubMenu>
+          );
+        } else {
+          return (
+            <Menu.Item key={menu.key} onClick={() => onClickMenu(menu.link)}>
+              <Icon type={menu.icon}></Icon>
+              <span>{menu.displayName}</span>
+            </Menu.Item>
+          );
         }
-      >
-        <Menu.ItemGroup title="Item 1">
-          <Menu.Item key="setting:1">Option 1</Menu.Item>
-          <Menu.Item key="setting:2">Option 2</Menu.Item>
-        </Menu.ItemGroup>
-        <Menu.ItemGroup title="Item 2">
-          <Menu.Item key="setting:3">Option 3</Menu.Item>
-          <Menu.Item key="setting:4">Option 4</Menu.Item>
-        </Menu.ItemGroup>
-      </SubMenu>
-      <Menu.Item key="alipay">
-        <a href="https://ant.design" target="_blank" rel="noopener noreferrer">
-          Navigation Four - Link
-        </a>
-      </Menu.Item>
+      })}
     </Menu>
   );
 };
+
+const MENU_CONSTANT = [
+  {
+    link: "/",
+    icon: "home",
+    displayName: "Trang chủ",
+    key: "home",
+    permission: "",
+    childMenu: []
+  },
+  {
+    link: "/ctv",
+    icon: "home",
+    displayName: "Cộng tác viên",
+    key: "ctv",
+    permission: "",
+    childMenu: []
+  },
+  {
+    link: "/dai-ly",
+    icon: "home",
+    displayName: "Đại lý",
+    key: "daily",
+    permission: "",
+    childMenu: []
+  },
+  {
+    link: "",
+    icon: "setting",
+    displayName: "Quản lý đại lý, CTV",
+    key: "system",
+    permission: "",
+    childMenu: [
+      {
+        link: "/dai-ly",
+        childIcon: "cluster",
+        displayName: "Quản lý đại lý",
+        permission: "",
+        key: "agency"
+      },
+      {
+        link: "/ctv",
+        childIcon: "branches",
+        displayName: "Quản lý CTV",
+        permission: "",
+        key: "colla"
+      }
+    ]
+  }
+];
