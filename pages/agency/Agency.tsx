@@ -2,8 +2,12 @@ import { Layout } from "../../components/Layout/Layout";
 import { Table } from "../../components/common/table/Table";
 
 import React from "react";
+import { FormInput } from "../../components/form/input/FormInput";
+import { FormSelect } from "../../components/form/select/FormSelect";
+import { FormButtonCreate } from "../../components/form/button/create/FormButtonCreate";
+import { FormButtonSearch } from "../../components/form/button/search/FormButtonSearch";
 
-const Agency = ({}) => {
+const Agency = (props:any) => {
   const columns = [
     {
       title: "STT",
@@ -28,9 +32,36 @@ const Agency = ({}) => {
   ];
 
   return (
-    <Layout title="Quản lý đại lý">
+    <Layout title="Danh sách đại lý">
+      <div className="input-group">
+        <div className="form-group col-md-2">
+          <FormSelect options={{}} name="manager" placeHolder="Người quản lý" />
+        </div>
+        <div className="form-group col-md-2">
+          <FormSelect options={{}} name="status" placeHolder="Trạng thái" />
+        </div>
+        <div className="form-group col-md-3">
+          <FormInput name="name" placeHolder="Mã, tên đại lý" />
+        </div>
+        <div className="form-group col-md-3">
+          <FormInput name="tax-code" placeHolder="Mã số thuế" />
+        </div>
+        <div className="form-group col-md-2">
+          <FormButtonSearch />
+          <FormButtonCreate toUrl="/dai-ly/them-moi" />
+        </div>
+      </div>
       <Table columns={columns} onFetchData={() => []} />
     </Layout>
   );
 };
+
+Agency.getInitialProps = async function() {
+
+  
+  return {
+    shows: "helloworld"
+  };
+};
+
 export default Agency;
