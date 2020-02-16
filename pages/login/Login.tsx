@@ -53,7 +53,7 @@ export const Login: React.FC<Props> = () => {
             </div>
 
             <form className="login100-form validate-form">
-              <span className="login100-form-title">Member Login</span>
+              <span className="login100-form-title">Admin Login</span>
 
               <div
                 className="wrap-input100 validate-input"
@@ -99,13 +99,13 @@ export const Login: React.FC<Props> = () => {
               </div>
 
               <div className="text-center p-t-136">
-                <a className="txt2" href="#">
+                {/* <a className="txt2" href="#">
                   Create your Account
                   <i
                     className="fa fa-long-arrow-right m-l-5"
                     aria-hidden="true"
                   ></i>
-                </a>
+                </a> */}
               </div>
             </form>
           </div>
